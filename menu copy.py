@@ -72,12 +72,10 @@ while place_order:
 
     # Print the options to choose from menu headings (all the first level
     # dictionary items in menu).
-    for key in menu.keys():
+    for i, key in enumerate(menu.keys()):
         print(f"{i}: {key}")
-        # Store the menu category associated with its menu item number
         menu_items[i] = key
-        # Add 1 to the menu item number
-        i += 1
+
 
     # Get the customer's input
     menu_category = input("Type menu number: ")
