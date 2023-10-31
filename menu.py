@@ -131,7 +131,7 @@ while place_order:
                     food_item = menu_items[menu_selection]['Item name']
                     item_price = float(menu_items[menu_selection]['Price'])
                     # Ask the customer for the quantity of the menu item
-                    quantity = input(f"How many {food_item}s would you like to purchase?\nPlease note, if you do not enter a valid input, you will receive one {food_item}. ")
+                    quantity = input(f"\nHow many {food_item}s would you like to purchase?\nPlease note, if you do not enter a valid input, you will receive one {food_item}. ")
 
                     # Check if the quantity is a number, default to 1 if not
                     if quantity.isdigit():
@@ -156,15 +156,16 @@ while place_order:
 
     while True:
         # Ask the customer if they would like to order anything else
-        keep_ordering = input("Would you like to keep ordering? (Y)es or (N)o ")
+        keep_ordering = input("\nWould you like to keep ordering? (Y)es or (N)o ").lower()
 
         # 5. Check the customer's input
-        if keep_ordering.isalpha():
+        match keep_ordering:
                 # Keep ordering, utilized starts with to allow for full words, i.e 'yes'
-            if keep_ordering.lower().startswith("y"):
+            case 'y':
+                place_order = True
                 break
                 # Exit the keep ordering question loop, utilized starts with to allow for full words, i.e 'no'
-            elif keep_ordering.lower().startswith("n"):
+            case 'n':
                 place_order = False
                 print("\nThank you very much for visiting the veriety food truck!")
                 break
@@ -172,34 +173,38 @@ while place_order:
                 # Since the customer decided to stop ordering, thank them for
                 # their order
                 # Exit the keep ordering question loop
-
-
-                # Tell the customer to try again
-        else: print("You did not enter a letter")
+                
+                #if they did not enter y or n
+                # Tell the customer to try again            
+            case _: 
+                print("\nPlease Try again")
 
 # Print out the customer's order
 print("This is what we are preparing for you.\n")
 
 # Uncomment the following line to check the structure of the order
-#print(order)
+#print(customer_order)
 
 print("Item name                 | Price  | Quantity")
 print("--------------------------|--------|----------")
 
 # 6. Loop through the items in the customer's order
-
+for order_item in customer_order:
     # 7. Store the dictionary items as variables
-
+    item_name, price, quantity = order_item['Item Name'], order_item['Price'], order_item['Quantity']
 
     # 8. Calculate the number of spaces for formatted printing
-
-
+    #Item name occupies 26 spaces, Price occupies 8 spaces (one included in pipe string), Quantity occupies the remaining space
+    item_space_str_len = 26 - len(item_name)
+    price_space_str_len = 7 - len(str(price))
     # 9. Create space strings
-
-
+    item_spaces = item_space_str_len * " "
+    price_spaces = price_space_str_len * " "
     # 10. Print the item name, price, and quantity
-
+    print (f"{item_name}{item_spaces}| {price}{price_spaces}| {quantity}")
 
 # 11. Calculate the cost of the order using list comprehension
 # Multiply the price by quantity for each item in the order list, then sum()
 # and print the prices.
+total_cost = sum([item['Price']*item['Quantity'] for item in customer_order])
+print(f"\nThe total cost of your order will be ${total_cost}.")
