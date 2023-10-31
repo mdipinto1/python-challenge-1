@@ -134,7 +134,7 @@ while place_order:
                     quantity = input(f"\nHow many {food_item}s would you like to purchase?\nPlease note, if you do not enter a valid input, you will receive one {food_item}. ")
 
                     # Check if the quantity is a number, default to 1 if not
-                    if quantity.isdigit():
+                    if quantity.isdigit() and int(quantity) > 0:
                         quantity = int(quantity)
                     else: quantity = 1
 
@@ -207,4 +207,4 @@ for order_item in customer_order:
 # Multiply the price by quantity for each item in the order list, then sum()
 # and print the prices.
 total_cost = sum([item['Price']*item['Quantity'] for item in customer_order])
-print(f"\nThe total cost of your order will be ${total_cost}.")
+print(f"\nThe total cost of your order will be ${total_cost:.2f}.")
